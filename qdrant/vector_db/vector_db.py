@@ -2,7 +2,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance, PointStruct
 
 class QdrantStorage:
-    def __init__(self, url="http://localhost:6333", collection='docs', dim=3072):
+    def __init__(self, url="http://localhost:6333", collection='docs', dim=768):
         self.client = QdrantClient(url=url, timeout=30)
         self.collection = collection
         self.dim = dim
@@ -14,12 +14,12 @@ class QdrantStorage:
 
     def upsert(self, ids, vectors, payloads):
         points = [PointStruct(id=ids[i], vector=vectors[i], payload=payloads[i]) for i in range(len(ids))]
-        self.client.upsert(self.collection, points=points)
+        self.client.upsert(collection_name=self.collection, points=points)
 
     def search(self, query_vector, top_k: int = 5):
         results = self.client.query_points(
             collection_name=self.collection,
-            query_vector=query_vector,
+            query=query_vector,
             limit=top_k,
             with_payload=True
         ).points
@@ -34,4 +34,4 @@ class QdrantStorage:
                 contexts.append(text)
                 sources.add(source)
 
-        return {'contexts': contexts, 'sources': sources}
+        return {'contexts': contexts, 'sources': list(sources)}
