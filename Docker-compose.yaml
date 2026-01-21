@@ -11,6 +11,9 @@ services:
       - ./scripts/init.sh:/init.sh
     restart: unless-stopped
     entrypoint: ["/bin/sh", "/init.sh"]
+    networks:
+      - pdf-genie-net
+
 
   qdrant-storage:
     container_name: qdrant-storage
@@ -19,6 +22,14 @@ services:
       - "6333:6333"
     volumes:
       - ./qdrant/vector_db/qdrant_storage:/qdrant/storage
+    depends_on:
+      - ollama
+    networks:
+      - pdf-genie-net
 
 volumes:
   ollama_data:
+
+networks:
+  pdf-genie-net:
+    driver: bridge

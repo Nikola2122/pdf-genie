@@ -1,10 +1,11 @@
 from llama_index.readers.file import PDFReader
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core import Document
-from ollama_model import ollama_client
+from ollama import Client
 from dotenv import load_dotenv
 import os
 
+ollama_client = Client(host="http://localhost:11434")
 load_dotenv()
 
 EMBED_MODEL = os.getenv("EMBED_MODEL")

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { styled } from '@mui/material/styles';
+import {useState} from 'react';
+import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SendIcon from '@mui/icons-material/Send';
@@ -17,19 +17,22 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-export default function InputFileUpload() {
+export default function InputFileUpload({changer}) {
     const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
+    const [sent, setSent] = useState(false);
+    const [failed, setFailed] = useState(false);
 
-    // Handle file selection (only one file)
+
     const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0]; // only one file
+        const selectedFile = event.target.files[0];
         if (selectedFile) {
             setFile(selectedFile);
+            setSent(false);
         }
     };
 
-    // Send file to backend
+
     const handleSend = async () => {
         if (!file) return;
 
@@ -40,22 +43,21 @@ export default function InputFileUpload() {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/upload-pdf', // replace with your backend URL
+                'http://localhost:8000/upload-pdf',
                 formData,
                 {
-                    headers: { 'Content-Type': 'multipart/form-data' },
+                    headers: {'Content-Type': 'multipart/form-data'},
                 }
             );
             console.log('Upload successful:', response.data);
-            alert(`Upload complete! ${file.name} processed.`);
-
-            // Clear selected file
             setFile(null);
+            setSent(true);
         } catch (err) {
             console.error('Upload failed:', err);
-            alert('Upload failed!');
+            setFailed(true)
         } finally {
             setUploading(false);
+            changer(true)
         }
     };
 
@@ -63,10 +65,10 @@ export default function InputFileUpload() {
         <div className="flex flex-col items-center gap-4 w-full">
             {/* File select button */}
             <Button
-                style={{ backgroundColor: 'black' }}
+                style={{backgroundColor: 'black'}}
                 component="label"
                 variant="contained"
-                startIcon={<CloudUploadIcon />}
+                startIcon={<CloudUploadIcon/>}
             >
                 {file ? 'Change file' : 'Select PDF'}
                 <VisuallyHiddenInput
@@ -85,14 +87,28 @@ export default function InputFileUpload() {
 
             {/* Send button */}
             <Button
-                style={{ backgroundColor: 'green' }}
+                style={{backgroundColor: 'green'}}
                 variant="contained"
-                startIcon={<SendIcon />}
+                startIcon={<SendIcon/>}
                 onClick={handleSend}
                 disabled={!file || uploading}
             >
                 {uploading ? 'Uploading...' : 'Upload'}
             </Button>
+            {sent && (
+                <div className="mt-4 w-full max-w-md text-center rounded-lg
+                    bg-green-600 text-white px-4 py-2
+                    shadow-md animate-fade-in">
+                    File successfully uploaded
+                </div>
+            )}
+            {failed && (
+                <div className="mt-4 w-full max-w-md text-center rounded-lg
+            bg-red-600 text-white px-4 py-2
+            shadow-md animate-fade-in">
+                    Upload failed. Please try again.
+                </div>
+            )}
         </div>
     );
 }
