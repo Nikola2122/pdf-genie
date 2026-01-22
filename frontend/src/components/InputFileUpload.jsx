@@ -17,7 +17,7 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-export default function InputFileUpload({changer}) {
+export default function InputFileUpload({fetchDocs}) {
     const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [sent, setSent] = useState(false);
@@ -29,6 +29,7 @@ export default function InputFileUpload({changer}) {
         if (selectedFile) {
             setFile(selectedFile);
             setSent(false);
+            setFailed(false);
         }
     };
 
@@ -52,12 +53,12 @@ export default function InputFileUpload({changer}) {
             console.log('Upload successful:', response.data);
             setFile(null);
             setSent(true);
+            fetchDocs()
         } catch (err) {
             console.error('Upload failed:', err);
             setFailed(true)
         } finally {
             setUploading(false);
-            changer(true)
         }
     };
 

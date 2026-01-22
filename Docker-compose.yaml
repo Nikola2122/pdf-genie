@@ -4,8 +4,6 @@ services:
   ollama:
     container_name: ollama
     image: ollama/ollama:latest
-    ports:
-      - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
       - ./scripts/init.sh:/init.sh
@@ -18,14 +16,33 @@ services:
   qdrant-storage:
     container_name: qdrant-storage
     image: qdrant/qdrant
-    ports:
-      - "6333:6333"
     volumes:
-      - ./qdrant/vector_db/qdrant_storage:/qdrant/storage
+      - ./qdrant_storage:/qdrant/storage
     depends_on:
       - ollama
     networks:
       - pdf-genie-net
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+    depends_on:
+      - qdrant-storage
+    networks:
+      - pdf-genie-net
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - pdf-genie-net
+
 
 volumes:
   ollama_data:

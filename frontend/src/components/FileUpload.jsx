@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import InputFileUpload from './InputFileUpload.jsx';
 import DocumentsList from "./DocumentList.jsx";
+import axios from "axios";
 
 export default function FileUpload() {
     const [documents, setDocuments] = useState([]);
-    const [changed, setChanged] = useState(false);
     const [count, setCount] = useState(0);
 
     async function fetchDocuments() {
         try {
-            const res = await fetch('http://localhost:8000/documents');
-            const data = await res.json();
+            const res = await axios.get('http://localhost:8000/documents');
+            const data = res.data
             setDocuments(data.documents);
             setCount(data.count);
+            console.log(data);
+
         } catch (err) {
             console.error('Failed to fetch documents:', err);
         }
@@ -20,15 +22,15 @@ export default function FileUpload() {
 
     useEffect(() => {
         fetchDocuments();
-    }, [changed]);
+    }, []);
 
     return (
         <div className="flex flex-col items-center justify-center gap-6 w-full">
             {/* Document list component */}
-            <DocumentsList documents={documents} count={count} />
+            <DocumentsList fetchDocs={fetchDocuments} documents={documents} count={count} />
 
             {/* File upload component */}
-            <InputFileUpload changer={setChanged} />
+            <InputFileUpload fetchDocs={fetchDocuments} />
         </div>
     );
 }
