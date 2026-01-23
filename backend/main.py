@@ -2,9 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 import shutil
 import uuid
 import os
-from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-
 from custom_models.models import SearchRequest, DeleteDocument
 from qdrant_utils.methods.data_ingester import store_chunks_in_qdrant
 from qdrant_utils.methods.data_loader import load_and_chunk_pdf, embed_texts
@@ -12,12 +10,12 @@ from qdrant_utils.methods.documents_counter import fetch_all_sources
 from qdrant_utils.methods.documents_deleter import delete_source
 from qdrant_utils.methods.query_helper import query_qdrant, build_context, build_prompt, query_llm
 
-load_dotenv()
 app = FastAPI()
+F_URL = os.getenv('F_URL')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[F_URL],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -54,6 +52,9 @@ async def upload_pdf(file: UploadFile = File(...)):
             "chunks_stored": len(chunks)
         }
 
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong")
+
     finally:
         if os.path.exists(file_path):
             os.remove(file_path)
@@ -69,27 +70,36 @@ async def get_all_sources():
 
 @app.post("/query")
 async def query(req: SearchRequest):
+    """
+    Query the Ollama model using context from Qdrant.
+    """
+    try:
+        search_resp = query_qdrant(req)
+        contexts = search_resp.contexts
+        sources = search_resp.sources
+        context = build_context(contexts)
+        prompt = build_prompt(context, req.query)
+        print(prompt)
+        llm_answer = query_llm(prompt)
 
-    search_resp = query_qdrant(req)
-    contexts = search_resp.contexts
-    sources = search_resp.sources
-    context = build_context(contexts)
-    prompt = build_prompt(context, req.query)
-    llm_answer = query_llm(prompt)
+        return {
+            'status': 'ok',
+            'answer': llm_answer,
+            'sources': sources,
+        }
 
-    print(llm_answer)
-    return {
-        'status': 'ok',
-        'answer': llm_answer,
-        'sources': sources,
-    }
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong")
 
 @app.post("/delete/")
 async def delete_source_endpoint(doc: DeleteDocument):
+    """
+    Delete a source from Qdrant.
+    """
     try:
         delete_source(doc.source)
         return {
             'status': 'ok'
         }
     except:
-        raise HTTPException(status_code=404, detail="Source not found")
+        raise HTTPException(status_code=500, detail="Error deleting source")

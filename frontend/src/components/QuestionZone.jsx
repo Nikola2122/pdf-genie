@@ -8,6 +8,7 @@ export default function QuestionZone() {
     const [topK, setTopK] = useState(2);
     const [current, setCurrent] = useState(null)
     const [loading, setLoading] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,7 +18,7 @@ export default function QuestionZone() {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/query',
+                `${API_URL}/query`,
                 {query: question, top_k: topK},
                 {
                     headers: {'Content-Type': 'application/json'},
@@ -31,7 +32,6 @@ export default function QuestionZone() {
         finally {
             setLoading(false);
         }
-
     }
 
 
@@ -55,7 +55,6 @@ export default function QuestionZone() {
                     gap-4
                 "
                 >
-                    {/* Question input */}
                     <input
                         required
                         placeholder="Ask a question about your documents..."
@@ -79,7 +78,6 @@ export default function QuestionZone() {
                     "
                     />
 
-                    {/* Top K + Button row */}
                     <div className="flex items-center gap-4">
                         <input
                             required

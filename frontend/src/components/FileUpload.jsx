@@ -6,10 +6,11 @@ import axios from "axios";
 export default function FileUpload() {
     const [documents, setDocuments] = useState([]);
     const [count, setCount] = useState(0);
+    const API_URL = import.meta.env.VITE_API_URL
 
     async function fetchDocuments() {
         try {
-            const res = await axios.get('http://localhost:8000/documents');
+            const res = await axios.get(`${API_URL}/documents`);
             const data = res.data
             setDocuments(data.documents);
             setCount(data.count);
@@ -26,10 +27,8 @@ export default function FileUpload() {
 
     return (
         <div className="flex flex-col items-center justify-center gap-6 w-full">
-            {/* Document list component */}
             <DocumentsList fetchDocs={fetchDocuments} documents={documents} count={count} />
 
-            {/* File upload component */}
             <InputFileUpload fetchDocs={fetchDocuments} />
         </div>
     );

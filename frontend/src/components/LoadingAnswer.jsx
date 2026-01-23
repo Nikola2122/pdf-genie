@@ -13,16 +13,13 @@ export default function LoadingAnswer() {
                     animate-pulse
                 "
             >
-                {/* Question placeholder */}
                 <div>
                     <div className="h-3 w-20 bg-zinc-600 rounded mb-2" />
                     <div className="h-5 w-3/4 bg-zinc-600 rounded" />
                 </div>
 
-                {/* Divider */}
                 <div className="h-px bg-zinc-600" />
 
-                {/* Answer placeholder */}
                 <div className="space-y-2">
                     <div className="h-3 w-16 bg-zinc-600 rounded" />
                     <div className="h-4 w-full bg-zinc-600 rounded" />
@@ -30,7 +27,6 @@ export default function LoadingAnswer() {
                     <div className="h-4 w-10/12 bg-zinc-600 rounded" />
                 </div>
 
-                {/* Sources placeholder */}
                 <div className="space-y-2 pt-2">
                     <div className="h-3 w-20 bg-zinc-600 rounded" />
                     <div className="h-3 w-1/3 bg-zinc-600 rounded" />

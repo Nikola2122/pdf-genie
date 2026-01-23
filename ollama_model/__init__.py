@@ -1,3 +1,6 @@
 from ollama import Client
+import os
 
-ollama_client = Client(host="http://ollama:11434")
+URL = os.getenv('OLLAMA_URL')
+
+ollama_client = Client(host=URL)

@@ -22,6 +22,7 @@ export default function InputFileUpload({fetchDocs}) {
     const [uploading, setUploading] = useState(false);
     const [sent, setSent] = useState(false);
     const [failed, setFailed] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL
 
 
     const handleFileChange = (event) => {
@@ -44,7 +45,7 @@ export default function InputFileUpload({fetchDocs}) {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/upload-pdf',
+                `${API_URL}/upload-pdf`,
                 formData,
                 {
                     headers: {'Content-Type': 'multipart/form-data'},
@@ -64,7 +65,6 @@ export default function InputFileUpload({fetchDocs}) {
 
     return (
         <div className="flex flex-col items-center gap-4 w-full">
-            {/* File select button */}
             <Button
                 style={{backgroundColor: 'black'}}
                 component="label"
@@ -79,14 +79,12 @@ export default function InputFileUpload({fetchDocs}) {
                 />
             </Button>
 
-            {/* Show selected file */}
             {file && (
                 <div className="text-zinc-100 bg-zinc-700 px-4 py-2 rounded w-full max-w-md text-center">
                     Selected file: <strong>{file.name}</strong>
                 </div>
             )}
 
-            {/* Send button */}
             <Button
                 style={{backgroundColor: 'green'}}
                 variant="contained"

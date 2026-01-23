@@ -7,13 +7,14 @@ def store_chunks_in_qdrant(
     embeddings: list[list[float]],
     source: str
 ):
-    assert len(chunks) == len(embeddings)
-
     if not chunks:
         raise ValueError("No chunks to store")
 
     if not embeddings:
         raise ValueError("No embeddings to store")
+
+    if len(chunks) != len(embeddings):
+        raise ValueError('Chunks and embeddings must have same length')
 
     ids = []
     payloads = []

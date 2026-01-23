@@ -26,7 +26,17 @@ services:
   backend:
     container_name: backend
     build:
-      context: ./backend
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      - EMBED_MODEL=${EMBED_MODEL}
+      - GEN_MODEL=${GEN_MODEL}
+      - UPLOAD_DIR=${UPLOAD_DIR}
+      - OLLAMA_URL=${OLLAMA_URL}
+      - QDRANT_URL=${QDRANT_URL}
+      - F_URL=${F_URL}
+    ports:
+      - "8000:8000"
     depends_on:
       - qdrant-storage
     networks:
@@ -36,13 +46,10 @@ services:
     container_name: frontend
     build:
       context: ./frontend
+      args:
+        - VITE_API_URL=${VITE_API_URL}
     ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    networks:
-      - pdf-genie-net
-
+      - "5173:80"
 
 volumes:
   ollama_data:
