@@ -128,8 +128,11 @@ The backend exposes the following endpoints:
   Deletes a PDF document by name and removes all associated vector embeddings from the vector database.
 
 - **`POST /query`**  
-  Accepts a natural-language question, retrieves the most relevant document chunks using semantic search, injects them as context, and generates a response using the local LLM.  
-  All answers are grounded strictly in the uploaded PDF content.
+  Accepts a natural-language question, retrieves the most relevant document chunks using semantic search, injects them as context, and generates a response using a local LLM.
+  When relevant context is found, answers are grounded strictly in the uploaded PDF content.
+  
+**Hint:**
+If a query does not match any uploaded PDF content, the system may still return a response generated without document context. This occurs because the local language model is intentionally small and optimized for performance, not factual breadth. For reliable, document-grounded answers, ensure the information exists in the uploaded PDFs.
 
 This workflow enables end-to-end document-aware question answering using local models, without exposing data outside the user’s machine.
 
