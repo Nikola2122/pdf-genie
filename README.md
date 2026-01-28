@@ -16,20 +16,21 @@ Everything runs locally, so your data never leaves your machine.
 - Fully local LLM inference using Ollama  
 - End-to-end Retrieval-Augmented Generation (RAG)  
 - Fully containerized using Docker Compose  
+- The configuration of **environment variables** allows easy management and secure handling of sensitive data.
 
 ---
 
 ## Tech Stack
 
-| Tech                        | Purpose                                                                              |
-|-----------------------------|--------------------------------------------------------------------------------------|
-| **Python**                  | Core backend language, API logic, data processing                                    |
-| **FastAPI**                 | Backend API, async endpoints, PDF upload, RAG orchestration                          |
-| **Pydantic**                | Request/response validation, typed schemas (`SearchRequest`, `DeleteDocument`)       |
-| **React + Vite**            | Frontend UI, fast dev server, component-based architecture                           |
-| **Qdrant**                  | Vector database for storing and querying embeddings                                  |
-| **Ollama**                  | Local LLM runtime for embeddings and answer generation                               |
-| **Docker + Docker Compose** | Containerization and multi-service orchestration (frontend, backend, vector DB, LLM) |
+| Tech                        | Purpose                                                                                                                |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------------|
+| **Python**                  | Core backend language, API logic, data processing                                                                      |
+| **FastAPI**                 | Backend API, async endpoints, PDF upload, RAG orchestration                                                            |
+| **Pydantic**                | Request/response validation, typed schemas (`SearchRequest`, `DeleteDocument`)                                         |
+| **React + Vite**            | Frontend UI, fast dev server, component-based architecture                                                             |
+| **Qdrant**                  | Vector database for storing and querying embeddings                                                                    |
+| **Ollama**                  | Local LLM runtime for embeddings and answer generation                                                                 |
+| **Docker + Docker Compose** | Containerization and multi-service orchestration (frontend, backend, vector DB, LLM)                                   |
 
 
 ---
