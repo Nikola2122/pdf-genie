@@ -37,8 +37,8 @@ Everything runs locally, so your data never leaves your machine.
 
 ## Models Used
 
-- **Embedding model:** `nomic-embed-text:latest`
-- **Generation model:** `gemma3:1b`
+- **Embedding model (encoder-based):** `nomic-embed-text:latest`
+- **Generation model (decoder-based):** `gemma3:1b`
 
 Both models are served locally through Ollama.
 
