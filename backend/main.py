@@ -24,7 +24,7 @@ UPLOAD_DIR = os.getenv("UPLOAD_DIR")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @app.post("/upload-pdf")
-async def upload_pdf(file: UploadFile = File(...)):
+def upload_pdf(file: UploadFile = File(...)):
     """
     Upload a PDF file, process it and store it in Qdrant.
     """
@@ -60,7 +60,7 @@ async def upload_pdf(file: UploadFile = File(...)):
             os.remove(file_path)
 
 @app.get("/documents")
-async def get_all_sources():
+def get_all_sources():
     """
     Return a list of unique source filenames stored in Qdrant.
     """
@@ -69,7 +69,7 @@ async def get_all_sources():
     return {"documents": list(sources), "count": len(sources)}
 
 @app.post("/query")
-async def query(req: SearchRequest):
+def query(req: SearchRequest):
     """
     Query the Ollama model using context from Qdrant.
     """
@@ -92,7 +92,7 @@ async def query(req: SearchRequest):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 @app.post("/delete/")
-async def delete_source_endpoint(doc: DeleteDocument):
+def delete_source_endpoint(doc: DeleteDocument):
     """
     Delete a source from Qdrant.
     """
