@@ -2,7 +2,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance, PointStruct
 
 class QdrantStorage:
-    def __init__(self, url, collection='docs', dim=768):
+    def __init__(self, url, collection='genie', dim=768):
         self.client = QdrantClient(url=url, timeout=30)
         self.collection = collection
         self.dim = dim

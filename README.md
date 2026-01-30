@@ -22,15 +22,15 @@ Everything runs locally, so your data never leaves your machine.
 
 ## Tech Stack
 
-| Tech                        | Purpose                                                                                                                |
-|-----------------------------|------------------------------------------------------------------------------------------------------------------------|
-| **Python**                  | Core backend language, API logic, data processing                                                                      |
-| **FastAPI**                 | Backend API, async endpoints, PDF upload, RAG orchestration                                                            |
-| **Pydantic**                | Request/response validation, typed schemas (`SearchRequest`, `DeleteDocument`)                                         |
-| **React + Vite**            | Frontend UI, fast dev server, component-based architecture                                                             |
-| **Qdrant**                  | Vector database for storing and querying embeddings                                                                    |
-| **Ollama**                  | Local LLM runtime for embeddings and answer generation                                                                 |
-| **Docker + Docker Compose** | Containerization and multi-service orchestration (frontend, backend, vector DB, LLM)                                   |
+| Tech                        | Purpose                                                                              |
+|-----------------------------|--------------------------------------------------------------------------------------|
+| **Python**                  | Core backend language, API logic, data processing                                    |
+| **FastAPI**                 | REST API, async endpoints, PDF upload, RAG orchestration                             |
+| **Pydantic**                | Request/response validation, typed schemas (`SearchRequest`, `DeleteDocument`)       |
+| **React + Vite**            | Frontend UI, fast dev server, component-based architecture                           |
+| **Qdrant**                  | Vector database for storing and querying embeddings                                  |
+| **Ollama**                  | Local LLM runtime for embeddings and answer generation                               |
+| **Docker + Docker Compose** | Containerization and multi-service orchestration (frontend, backend, vector DB, LLM) |
 
 
 ---
@@ -49,7 +49,7 @@ Both models are served locally through Ollama.
 1. PDF files are uploaded through the frontend  
 2. The backend extracts and chunks text from the PDFs  
 3. Each chunk is converted into vector embeddings  
-4. Embeddings are stored in Qdrant  
+4. Embeddings are stored in Qdrant as points within the **genie** collection (using cosine distance for similarity search)
 5. When a question is asked:
    - Relevant chunks are retrieved using semantic search  
    - Retrieved context is injected into the prompt  
