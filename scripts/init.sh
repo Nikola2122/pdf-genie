@@ -4,8 +4,8 @@ ollama serve &
 
 sleep 5
 
-ollama pull gemma3:1b
+ollama pull qwen2.5:0.5b
 
-ollama pull nomic-embed-text:latest
+ollama pull all-minilm:latest
 
 wait
