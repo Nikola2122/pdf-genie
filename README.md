@@ -37,8 +37,8 @@ Everything runs locally, so your data never leaves your machine.
 
 ## Models Used
 
-- **Embedding model (encoder-based):** `nomic-embed-text:latest`
-- **Generation model (decoder-based):** `gemma3:1b`
+- **Embedding model (encoder-based):** `all-minilm:latest`
+- **Generation model (decoder-based):** `qwen2.5:0.5b`
 
 Both models are served locally through Ollama.
 
@@ -82,8 +82,8 @@ cd pdf-genie
 Create a `.env` file in the project root with the following content:
 
 ```env
-EMBED_MODEL=nomic-embed-text:latest
-GEN_MODEL=gemma3:1b
+EMBED_MODEL=all-minilm:latest
+GEN_MODEL=qwen2.5:0.5b
 UPLOAD_DIR=uploads
 VITE_API_URL=http://localhost:8000
 OLLAMA_URL=http://ollama:11434
