@@ -1,7 +1,7 @@
 import {useState} from "react";
-import axios from "axios";
 import Answer from "./Answer.jsx";
 import LoadingAnswer from "./LoadingAnswer.jsx";
+import api from "../axios/api.js";
 
 export default function QuestionZone() {
     const [question, setQuestion] = useState('');
@@ -17,7 +17,7 @@ export default function QuestionZone() {
         setLoading(true)
 
         try {
-            const response = await axios.post(
+            const response = await api.post(
                 `${API_URL}/query`,
                 {query: question, top_k: topK},
                 {

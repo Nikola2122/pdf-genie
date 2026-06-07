@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SendIcon from '@mui/icons-material/Send';
-import axios from 'axios';
+import api from "../axios/api.js";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -44,7 +44,7 @@ export default function InputFileUpload({fetchDocs}) {
         setUploading(true);
 
         try {
-            const response = await axios.post(
+            const response = await api.post(
                 `${API_URL}/upload-pdf`,
                 formData,
                 {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import InputFileUpload from './InputFileUpload.jsx';
 import DocumentsList from "./DocumentList.jsx";
-import axios from "axios";
+import api from "../axios/api.js";
 
 export default function FileUpload() {
     const [documents, setDocuments] = useState([]);
@@ -10,7 +10,7 @@ export default function FileUpload() {
 
     async function fetchDocuments() {
         try {
-            const res = await axios.get(`${API_URL}/documents`);
+            const res = await api.get(`${API_URL}/documents`);
             const data = res.data
             setDocuments(data.documents);
             setCount(data.count);

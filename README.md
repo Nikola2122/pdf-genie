@@ -85,7 +85,7 @@ Create a `.env` file in the project root with the following content:
 EMBED_MODEL=all-minilm:latest
 GEN_MODEL=qwen2.5:0.5b
 UPLOAD_DIR=uploads
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=/api
 OLLAMA_URL=http://ollama:11434
 QDRANT_URL=http://qdrant-storage:6333
 F_URL=http://localhost:5173

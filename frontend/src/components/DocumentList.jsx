@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../axios/api.js";
 
 export default function DocumentsList({documents, count, fetchDocs}) {
 
@@ -6,7 +6,7 @@ export default function DocumentsList({documents, count, fetchDocs}) {
 
     const deleteDocument = async (source) => {
         try {
-            const resp = await axios.post(`${API_URL}/delete/`, {
+            const resp = await api.post(`${API_URL}/delete/`, {
                 source: source,
             })
             console.log(resp)
