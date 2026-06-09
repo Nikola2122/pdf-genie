@@ -6,11 +6,10 @@ import api from "../axios/api.js";
 export default function FileUpload() {
     const [documents, setDocuments] = useState([]);
     const [count, setCount] = useState(0);
-    const API_URL = import.meta.env.VITE_API_URL
 
     async function fetchDocuments() {
         try {
-            const res = await api.get(`${API_URL}/documents`);
+            const res = await api.get(`/documents`);
             const data = res.data
             setDocuments(data.documents);
             setCount(data.count);

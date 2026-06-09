@@ -8,7 +8,6 @@ export default function QuestionZone() {
     const [topK, setTopK] = useState(2);
     const [current, setCurrent] = useState(null)
     const [loading, setLoading] = useState(false);
-    const API_URL = import.meta.env.VITE_API_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,7 +17,7 @@ export default function QuestionZone() {
 
         try {
             const response = await api.post(
-                `${API_URL}/query`,
+                `/query`,
                 {query: question, top_k: topK},
                 {
                     headers: {'Content-Type': 'application/json'},

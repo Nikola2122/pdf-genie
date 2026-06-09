@@ -35,8 +35,6 @@ services:
       - OLLAMA_URL=${OLLAMA_URL}
       - QDRANT_URL=${QDRANT_URL}
       - F_URL=${F_URL}
-    ports:
-      - "8000:8000"
     depends_on:
       - qdrant-storage
     networks:
@@ -50,6 +48,8 @@ services:
         - VITE_API_URL=${VITE_API_URL}
     ports:
       - "5173:80"
+    networks:
+      - pdf-genie-net
 
 volumes:
   ollama_data:

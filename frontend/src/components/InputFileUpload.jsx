@@ -22,7 +22,6 @@ export default function InputFileUpload({fetchDocs}) {
     const [uploading, setUploading] = useState(false);
     const [sent, setSent] = useState(false);
     const [failed, setFailed] = useState(false);
-    const API_URL = import.meta.env.VITE_API_URL
 
 
     const handleFileChange = (event) => {
@@ -45,7 +44,7 @@ export default function InputFileUpload({fetchDocs}) {
 
         try {
             const response = await api.post(
-                `${API_URL}/upload-pdf`,
+                `/upload-pdf`,
                 formData,
                 {
                     headers: {'Content-Type': 'multipart/form-data'},

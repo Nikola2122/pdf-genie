@@ -2,11 +2,9 @@ import api from "../axios/api.js";
 
 export default function DocumentsList({documents, count, fetchDocs}) {
 
-    const API_URL = import.meta.env.VITE_API_URL
-
     const deleteDocument = async (source) => {
         try {
-            const resp = await api.post(`${API_URL}/delete/`, {
+            const resp = await api.post(`/delete/`, {
                 source: source,
             })
             console.log(resp)
