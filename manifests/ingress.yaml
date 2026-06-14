@@ -5,12 +5,20 @@ metadata:
   namespace: pdf-genie
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: pdf-genie-strip-api@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
     - host: pdf-genie.local
       http:
         paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8000
           - path: /frontend
             pathType: Prefix
             backend:
