@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pdf-genie-config
+  namespace: pdf-genie
+data:
+  EMBED_MODEL: "all-minilm:latest"
+  GEN_MODEL: "qwen2.5:0.5b"
+  UPLOAD_DIR: "uploads"
+  OLLAMA_URL: "http://ollama:11434"
+  QDRANT_URL: "http://qdrant-storage:6333"
+  F_URL: "http://pdf-genie.local"
