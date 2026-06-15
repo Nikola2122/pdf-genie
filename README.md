@@ -16,6 +16,7 @@ Everything runs locally, so your data never leaves your machine.
 - Fully local LLM inference using Ollama  
 - End-to-end Retrieval-Augmented Generation (RAG)  
 - Fully containerized using Docker Compose  
+- Kubernetes manifests for cluster deployment  
 - The configuration of **environment variables** allows easy management and secure handling of sensitive data.
 
 ---
@@ -113,6 +114,46 @@ http://localhost:5173
 
 ---
 
+## Kubernetes Deployment
+
+Kubernetes manifests are located in the `k8s/` folder. Tested on a local [k3d](https://k3d.io) cluster with Traefik.
+
+### 1. Create the cluster
+
+```bash
+k3d cluster create test --port "80:80@loadbalancer"
+```
+
+### 2. Apply the manifests
+
+```bash
+kubectl apply -f manifests/
+```
+
+Ollama will pull the models on first start — wait for all pods to be `Running`:
+
+```bash
+kubectl get pods -n pdf-genie -w
+```
+
+### 3. Add the hostname to your hosts file
+
+Add the following line to `/etc/hosts` (Windows: `C:\Windows\System32\drivers\etc\hosts`):
+
+```
+127.0.0.1  pdf-genie.local
+```
+
+### 4. Open the App
+
+```text
+http://pdf-genie.local
+```
+
+Traefik routes `/api/*` to the backend and `/` to the frontend. Qdrant runs as a StatefulSet with persistent storage.
+
+---
+
 ## **API Workflow**
 
 **PDF-Genie** uses a simple HTTP-based API to handle document ingestion, management, and Retrieval-Augmented Generation (RAG) queries.
@@ -135,6 +176,4 @@ The backend exposes the following endpoints:
 **Hint:**
 If a query does not match any uploaded PDF content, the system may still return a response generated without document context. This occurs because the local language model is intentionally small and optimized for performance, not factual breadth. For reliable, document-grounded answers, ensure the information exists in the uploaded PDFs.
 
-This workflow enables end-to-end document-aware question answering using local models, without exposing data outside the user’s machine.
-
-
+This workflow enables end-to-end document-aware question answering using local models, without exposing data outside the user's machine.
