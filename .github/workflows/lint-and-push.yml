@@ -45,10 +45,7 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/pdf-genie-backend:latest
 
       - name: Build frontend image
-        run: docker build \
-          --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
-          -t ${{ secrets.DOCKER_USERNAME }}/pdf-genie-frontend:latest \
-          ./frontend
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/pdf-genie-frontend:latest ./frontend
 
       - name: Push frontend image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/pdf-genie-frontend:latest
