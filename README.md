@@ -116,7 +116,7 @@ http://localhost:5173
 
 ## Kubernetes Deployment
 
-Kubernetes manifests are located in the `k8s/` folder. Tested on a local [k3d](https://k3d.io) cluster with Traefik.
+Kubernetes manifests are located in the `manifests/` folder. Tested on a local [k3d](https://k3d.io) cluster with Traefik.
 
 ### 1. Create the cluster
 
