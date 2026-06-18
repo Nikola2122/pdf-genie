@@ -1,4 +1,4 @@
-# RAG Application - PDF-Genie
+# RAG Application PDF-Genie
 
 **PDF-Genie** is a local Retrieval-Augmented Generation (RAG) application that helps you actually use your PDF documents instead of manually searching through them.
 
