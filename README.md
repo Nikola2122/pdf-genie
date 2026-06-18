@@ -130,7 +130,7 @@ k3d cluster create test --port "80:80@loadbalancer"
 kubectl apply -f manifests/
 ```
 
-Ollama will pull the models on first start — wait for all pods to be `Running`:
+Ollama will pull the models on first start so it may be slow. Wait for all pods to be `Running`:
 
 ```bash
 kubectl get pods -n pdf-genie -w
