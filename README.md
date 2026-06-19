@@ -26,7 +26,7 @@ Everything runs locally, so your data never leaves your machine.
 | Tech                        | Purpose                                                                              |
 |-----------------------------|--------------------------------------------------------------------------------------|
 | **Python**                  | Core backend language, API logic, data processing                                    |
-| **FastAPI**                 | REST API, async endpoints, PDF upload, RAG orchestration                             |
+| **FastAPI**                 | REST API, PDF upload, RAG orchestration                                              |
 | **Pydantic**                | Request/response validation, typed schemas (`SearchRequest`, `DeleteDocument`)       |
 | **React + Vite**            | Frontend UI, fast dev server, component-based architecture                           |
 | **Qdrant**                  | Vector database for storing and querying embeddings                                  |
